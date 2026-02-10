@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { getAllUsers, deleteUser, updateUser, register } from "@/lib/api";
 import { User } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -157,8 +158,8 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4">
-      <div className="max-w-7xl mx-auto space-y-6">
+    <div className="min-h-[calc(100vh-4rem)] bg-linear-to-br from-slate-50 to-slate-100 p-4">
+      <div className="max-w-7xl mx-auto space-y-6 py-6">
         {/* Header */}
         <Card>
           <CardHeader>
@@ -193,7 +194,7 @@ export default function AdminDashboard() {
         )}
 
         {/* Acciones Rápidas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Card
             className="cursor-pointer hover:shadow-lg transition-shadow"
             onClick={() => setShowRegisterDialog(true)}
@@ -214,6 +215,17 @@ export default function AdminDashboard() {
               </CardDescription>
             </CardHeader>
           </Card>
+
+          <Link href="/cesar">
+            <Card className="cursor-pointer hover:shadow-lg transition-shadow border-2 border-purple-200 hover:border-purple-400">
+              <CardHeader>
+                <CardTitle className="text-lg">🔐 Cifrado César</CardTitle>
+                <CardDescription>
+                  Herramienta de criptografía
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </Link>
         </div>
 
         {/* Lista de Usuarios */}

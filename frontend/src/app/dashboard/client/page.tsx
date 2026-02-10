@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { getMyProfile, updateMyProfile } from '@/lib/api';
 import { User } from '@/lib/types';
 import { Button } from '@/components/ui/button';
@@ -92,8 +93,8 @@ export default function ClientDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-4">
-      <div className="max-w-4xl mx-auto space-y-6">
+    <div className="min-h-[calc(100vh-4rem)] bg-linear-to-br from-slate-50 to-slate-100 p-4">
+      <div className="max-w-4xl mx-auto space-y-6 py-6">
         {/* Header */}
         <Card>
           <CardHeader>
@@ -169,6 +170,36 @@ export default function ClientDashboard() {
                 </p>
               </div>
             </div>
+          </CardContent>
+        </Card>
+
+        {/* Herramientas */}
+        <Card>
+          <CardHeader>
+            <CardTitle>🔧 Herramientas</CardTitle>
+            <CardDescription>
+              Herramientas de criptografía disponibles
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href="/cesar">
+              <div className="p-4 border-2 border-purple-200 rounded-lg hover:bg-purple-50 hover:border-purple-400 transition-all cursor-pointer">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="text-3xl">🔐</div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900">Cifrado César</h3>
+                      <p className="text-sm text-gray-600">
+                        Cifra y descifra mensajes con historial privado
+                      </p>
+                    </div>
+                  </div>
+                  <Button className="bg-purple-600 hover:bg-purple-700">
+                    Abrir →
+                  </Button>
+                </div>
+              </div>
+            </Link>
           </CardContent>
         </Card>
 

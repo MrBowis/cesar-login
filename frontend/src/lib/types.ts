@@ -93,3 +93,41 @@ export interface ValidationError {
 export interface ErrorResponse {
   detail: string | ValidationError[];
 }
+
+// Tipos para Cifrado César
+
+export interface CesarEncryptRequest {
+  text: string;
+  shift: number;
+  save_to_history?: boolean;
+}
+
+export interface CesarDecryptRequest {
+  text: string;
+  shift: number;
+  save_to_history?: boolean;
+}
+
+export interface CesarOperationResponse {
+  operation: 'ENCRYPT' | 'DECRYPT';
+  input_text: string;
+  output_text: string;
+  shift: number;
+  saved_to_history: boolean;
+}
+
+export interface CesarHistoryItem {
+  id: string;
+  operation_type: 'ENCRYPT' | 'DECRYPT';
+  input_text: string;
+  output_text: string;
+  shift: number;
+  created_at: string;
+}
+
+export interface CesarHistoryResponse {
+  total: number;
+  items: CesarHistoryItem[];
+  limit: number;
+  offset: number;
+}

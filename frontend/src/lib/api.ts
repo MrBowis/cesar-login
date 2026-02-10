@@ -13,6 +13,10 @@ import {
   UpdateProfileRequest,
   UpdateProfileResponse,
   AdminUsersResponse,
+  CesarEncryptRequest,
+  CesarDecryptRequest,
+  CesarOperationResponse,
+  CesarHistoryResponse,
 } from './types';
 
 // Configuración de Axios
@@ -158,6 +162,89 @@ export const deleteUser = async (token: string, userId: string): Promise<{ messa
     const response = await api.delete<{ message: string }>(`/auth/admin/users/${userId}`, {
       headers: getAuthHeaders(token),
     });
+    return response.data;
+  } catch (error) {
+    throw new Error(handleApiError(error));
+  }
+};
+
+// ============= Cifrado César =============
+
+// Endpoint: POST /cesar/encrypt
+export const cesarEncrypt = async (
+  data: CesarEncryptRequest,
+  token?: string
+): Promise<CesarOperationResponse> => {
+  try {
+    const headers = token ? getAuthHeaders(token) : {};
+    const response = await api.post<CesarOperationResponse>('/cesar/encrypt', data, {
+      headers,
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(handleApiError(error));
+  }
+};
+
+// Endpoint: POST /cesar/decrypt
+export const cesarDecrypt = async (
+  data: CesarDecryptRequest,
+  token?: string
+): Promise<CesarOperationResponse> => {
+  try {
+    const headers = token ? getAuthHeaders(token) : {};
+    const response = await api.post<CesarOperationResponse>('/cesar/decrypt', data, {
+      headers,
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(handleApiError(error));
+  }
+};
+
+// Endpoint: GET /cesar/history
+export const getCesarHistory = async (
+  token: string,
+  limit: number = 50,
+  offset: number = 0
+): Promise<CesarHistoryResponse> => {
+  try {
+    const response = await api.get<CesarHistoryResponse>('/cesar/history', {
+      headers: getAuthHeaders(token),
+      params: { limit, offset },
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(handleApiError(error));
+  }
+};
+
+// Endpoint: DELETE /cesar/history/{history_id}
+export const deleteCesarHistoryItem = async (
+  token: string,
+  historyId: string
+): Promise<{ message: string }> => {
+  try {
+    const response = await api.delete<{ message: string }>(`/cesar/history/${historyId}`, {
+      headers: getAuthHeaders(token),
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(handleApiError(error));
+  }
+};
+
+// Endpoint: DELETE /cesar/history
+export const deleteAllCesarHistory = async (
+  token: string
+): Promise<{ message: string; deleted_count: number }> => {
+  try {
+    const response = await api.delete<{ message: string; deleted_count: number }>(
+      '/cesar/history',
+      {
+        headers: getAuthHeaders(token),
+      }
+    );
     return response.data;
   } catch (error) {
     throw new Error(handleApiError(error));
